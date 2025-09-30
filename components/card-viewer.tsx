@@ -1,11 +1,11 @@
 "use client";
 
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
+  Environment,
   OrbitControls,
   PresentationControls,
-  Stage,
   useGLTF,
 } from "@react-three/drei";
 import { PostProcessing } from "@/components/post-processing";
@@ -17,7 +17,7 @@ function Model() {
 
 export default function CardViewer() {
   const [mounted, setMounted] = useState(false);
-  const [autoRotate, setAutoRotate] = useState(true);
+  const autoRotate = true;
 
   // Prevent hydration errors
   useEffect(() => {
@@ -26,34 +26,40 @@ export default function CardViewer() {
 
   if (!mounted)
     return (
-      <div className="h-screen w-screen bg-white flex items-center justify-center">
+      <div className="flex h-screen w-full items-center justify-center">
         Loading...
       </div>
     );
 
   return (
-    <div className="h-screen w-screen">
-      <Canvas shadows dpr={[1, 2]} className="h-full w-full">
-        <color attach="background" args={["#ffffff"]} />
+    <div className="h-screen w-full">
+      <Canvas
+        dpr={[1, 2]}
+        className="h-full w-full bg-transparent"
+        gl={{ alpha: true, antialias: true }}
+        camera={{ position: [0, 0, 1], fov: 45 }}
+      >
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[4, 6, 5]} intensity={1} />
         <Suspense fallback={null}>
-          <Stage environment="city" adjustCamera={2.5} intensity={0.3}>
-            <PresentationControls
-              global
-              rotation={[0, -Math.PI / 4, 0]}
-              polar={[-Math.PI / 4, Math.PI / 4]}
-              azimuth={[-Math.PI / 4, Math.PI / 4]}
-              config={{ mass: 2, tension: 500 }}
-              // snap={{ mass: 4, tension: 1500 }}
-            >
-              <Model />
-            </PresentationControls>
-          </Stage>
+          <Environment preset="city" />
+          <PresentationControls
+            global
+            rotation={[0, -Math.PI / 4, 0]}
+            polar={[0, 0]} // lock vertical rotation so interactions stay horizontal
+            azimuth={[-Math.PI / 4, Math.PI / 4]}
+            config={{ mass: 2, tension: 500 }}
+          >
+            <Model />
+          </PresentationControls>
         </Suspense>
         <OrbitControls
           autoRotate={autoRotate}
           autoRotateSpeed={2.5}
+          minPolarAngle={Math.PI / 2}
+          maxPolarAngle={Math.PI / 2}
           enableZoom={false}
-          enablePan={true}
+          enablePan={false}
         />
         <PostProcessing gridSize={3} pixelSizeRatio={1} grayscaleOnly={false} />
       </Canvas>

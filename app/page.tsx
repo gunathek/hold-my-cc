@@ -3,11 +3,11 @@ import CardViewer from "@/components/card-viewer";
 
 export default function Home() {
   return (
-    <div>
-      <main>
-        <AsciiHero />
+    <main className="flex min-h-screen flex-col bg-black">
+      <AsciiHero />
+      <section className="flex w-full justify-center bg-transparent">
         <CardViewer />
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
