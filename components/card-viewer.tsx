@@ -15,6 +15,11 @@ function Model() {
   return <primitive object={scene} scale={1.5} />;
 }
 
+const CONTAINER_CLASSES =
+  "absolute inset-0 z-[1] flex items-center justify-center";
+const STAGE_OFFSET_CLASSES =
+  "flex h-full w-full items-center justify-center -translate-y-[30%]";
+
 export default function CardViewer() {
   const [mounted, setMounted] = useState(false);
   const autoRotate = true;
@@ -26,43 +31,49 @@ export default function CardViewer() {
 
   if (!mounted)
     return (
-      <div className="absolute inset-0 z-[1] flex items-center justify-center">
-        Loading...
+      <div className={CONTAINER_CLASSES}>
+        <div className={STAGE_OFFSET_CLASSES}>Loading...</div>
       </div>
     );
 
   return (
-    <div className="absolute inset-0 z-[1] flex items-center justify-center">
-      <Canvas
-        dpr={[1, 2]}
-        className="h-full w-full bg-transparent"
-        gl={{ alpha: true, antialias: true }}
-        camera={{ position: [0, 0, 1], fov: 45 }}
-      >
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[4, 6, 5]} intensity={1} />
-        <Suspense fallback={null}>
-          <Environment preset="city" />
-          <PresentationControls
-            global
-            rotation={[0, -Math.PI / 4, 0]}
-            polar={[0, 0]} // lock vertical rotation so interactions stay horizontal
-            azimuth={[-Math.PI / 4, Math.PI / 4]}
-            config={{ mass: 2, tension: 500 }}
-          >
-            <Model />
-          </PresentationControls>
-        </Suspense>
-        <OrbitControls
-          autoRotate={autoRotate}
-          autoRotateSpeed={2.5}
-          minPolarAngle={Math.PI / 2}
-          maxPolarAngle={Math.PI / 2}
-          enableZoom={false}
-          enablePan={false}
-        />
-        <PostProcessing gridSize={3} pixelSizeRatio={1} grayscaleOnly={false} />
-      </Canvas>
+    <div className={CONTAINER_CLASSES}>
+      <div className={STAGE_OFFSET_CLASSES}>
+        <Canvas
+          dpr={[1, 2]}
+          className="h-full w-full bg-transparent"
+          gl={{ alpha: true, antialias: true }}
+          camera={{ position: [0, 0, 1], fov: 45 }}
+        >
+          <ambientLight intensity={0.8} />
+          <directionalLight position={[4, 6, 5]} intensity={1} />
+          <Suspense fallback={null}>
+            <Environment preset="city" />
+            <PresentationControls
+              global
+              rotation={[0, -Math.PI / 4, 0]}
+              polar={[0, 0]} // lock vertical rotation so interactions stay horizontal
+              azimuth={[-Math.PI / 4, Math.PI / 4]}
+              config={{ mass: 2, tension: 500 }}
+            >
+              <Model />
+            </PresentationControls>
+          </Suspense>
+          <OrbitControls
+            autoRotate={autoRotate}
+            autoRotateSpeed={2.5}
+            minPolarAngle={Math.PI / 2}
+            maxPolarAngle={Math.PI / 2}
+            enableZoom={false}
+            enablePan={false}
+          />
+          <PostProcessing
+            gridSize={3}
+            pixelSizeRatio={1}
+            grayscaleOnly={false}
+          />
+        </Canvas>
+      </div>
     </div>
   );
 }
