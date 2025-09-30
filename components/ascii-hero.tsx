@@ -70,7 +70,8 @@ export default function AsciiHero() {
           if (longestRow > 0) {
             const availableWidth = viewportWidth * WIDTH_PADDING_RATIO;
             const calculatedSize =
-              (availableWidth / longestRow) /
+              availableWidth /
+              longestRow /
               Math.max(CHARACTER_ASPECT_RATIO, 0.1);
             setFontSize(
               Math.min(MAX_FONT_SIZE, Math.max(MIN_FONT_SIZE, calculatedSize)),
