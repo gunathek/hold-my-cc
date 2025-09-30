@@ -1,13 +1,9 @@
-import AsciiHero from "@/components/ascii-hero";
-import CardViewer from "@/components/card-viewer";
+import HeroStage from "@/components/hero-stage";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col bg-black">
-      <AsciiHero />
-      <section className="flex w-full justify-center bg-transparent">
-        <CardViewer />
-      </section>
+    <main className="min-h-screen w-full bg-black">
+      <HeroStage />
     </main>
   );
 }

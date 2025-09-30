@@ -161,7 +161,7 @@ export default function AsciiHero() {
   }, [coloredAscii, status]);
 
   return (
-    <main className="flex min-h-screen w-full bg-black">
+    <div className="relative z-0 flex min-h-screen w-full bg-black">
       <pre
         ref={preRef}
         className="block h-full w-full overflow-hidden whitespace-pre font-mono text-stone-100"
@@ -177,6 +177,6 @@ export default function AsciiHero() {
       >
         {content ?? asciiArt}
       </pre>
-    </main>
+    </div>
   );
 }

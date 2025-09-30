@@ -26,13 +26,13 @@ export default function CardViewer() {
 
   if (!mounted)
     return (
-      <div className="flex h-screen w-full items-center justify-center">
+      <div className="absolute inset-0 z-[1] flex items-center justify-center">
         Loading...
       </div>
     );
 
   return (
-    <div className="h-screen w-full">
+    <div className="absolute inset-0 z-[1] flex items-center justify-center">
       <Canvas
         dpr={[1, 2]}
         className="h-full w-full bg-transparent"
