@@ -54,7 +54,7 @@ export default function CardViewer() {
               rotation={[0, -Math.PI / 4, 0]}
               polar={[0, 0]} // lock vertical rotation so interactions stay horizontal
               azimuth={[-Math.PI / 4, Math.PI / 4]}
-              config={{ mass: 2, tension: 500 }}
+              damping={0.2}
             >
               <Model />
             </PresentationControls>
